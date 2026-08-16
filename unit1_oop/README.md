@@ -1,35 +1,17 @@
-# Unit 1 Discussion: Python OOP, Namespaces, and Copying
+# Unit 1 Discussion Implementation Documentation
 
 ## Overview
+Implemented a parent-child class hierarchy in Python to demonstrate core object-oriented programming concepts including inheritance, method overriding, custom attributes and copying behaviors.
 
-This assignment explores object-oriented programming (OOP) concepts in Python, including inheritance, namespaces, and object copying.
-
-## Learning Objectives
-
-- Create parent and child classes
-- Use inheritance to extend functionality
-- Understand class and instance namespaces
-- Demonstrate shallow and deep copying
-- Apply object-oriented design principles
-
-## Requirements
-
-Complete all TODO sections in the source code:
-
-1. Create a parent class.
-2. Create a child class using inheritance.
-3. Demonstrate class and instance namespaces.
-4. Demonstrate shallow and deep copying.
-5. Create and test objects in `main()`.
-6. Add a student-created extension.
+## Implementation Details
+- Parent Class: Created `ParentClass` with class-level organizational variables, unique instance variables (`name`, `member_id`) and an information summary method.
+- Child Class: Created `ChildClass` inheriting from `ParentClass`, using `super().__init__()` to maintain code reuse. Added student attributes, an overridden `get_details()` method and a custom `calculate_workload()` extension method.
+- Namespaces: Used `__dict__` to inspect dynamic object modification and differentiate between shared class variables and instance attributes.
+- Copying: Utilized Python's `copy` module to contrast shallow copy reference sharing against deep copy recursive duplication.
 
 ## Discussion Board Reflection
 
-After completing the programming assignment, add this reflection to your initial discussion post in LEO.
-
-Your reflection should be approximately 150–200 words and address the following questions:
-
-1. What concepts or skills did you learn while completing this assignment?
-2. What challenges did you encounter, and how did you overcome them?
-3. Compare OOP to procedural programming.
-4. Discuss the benefits of maintainability and reusability and apply this managing overhead, practical application development, and future use.
+1. Concepts Learned: Deepened understanding of class inheritance, namespace attribute resolution and the operational differences between shallow and deep copying in Python.
+2. Challenges Overcome: Managing shared mutable references inside objects required careful testing using `deepcopy()` to prevent unintended side effects across instances.
+3. OOP vs. Procedural Programming: Procedural programming organizes code around sequential functions and logic, whereas OOP binds data and behaviors into self-contained objects. OOP provides far better modularity for scaling complex software.
+4. Maintainability and Reusability: Designing modular classes reduces code duplication, simplifies debugging and allows future software expansions without disrupting foundational code.

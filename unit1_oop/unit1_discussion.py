@@ -25,7 +25,14 @@ from copy import copy, deepcopy
 # Replace the pass statement with your implementation.
 
 class ParentClass:
-    pass
+    organization = "University System"
+
+    def __init__(self, name: str, member_id: str):
+        self.name = name
+        self.member_id = member_id
+
+    def get_details(self) -> str:
+        return f"Name: {self.name}, ID: {self.member_id}, Organization: {self.organization}"
 
 
 # TODO 2:
@@ -41,7 +48,26 @@ class ParentClass:
 # Replace the pass statement with your implementation.
 
 class ChildClass(ParentClass):
-    pass
+    program_type = "Undergraduate"
+
+    def __init__(self, name: str, member_id: str, major: str, courses: list = None):
+        super().__init__(name, member_id)
+        self.major = major
+        # Mutable nested list used to demonstrate copying behavior
+        self.courses = courses if courses is not None else []
+
+    def enroll_course(self, course_name: str):
+        self.courses.append(course_name)
+
+    # Extension method (Requirement 6 from README)
+    def calculate_workload(self) -> int:
+        """Calculates estimated weekly study hours based on enrolled courses."""
+        return len(self.courses) * 3
+
+    def get_details(self) -> str:
+        """Overrides parent method to append program, major and course details."""
+        base_details = super().get_details()
+        return f"{base_details}, Program: {self.program_type}, Major: {self.major}, Courses: {self.courses}"
 
 
 # TODO 3:
@@ -57,7 +83,28 @@ class ChildClass(ParentClass):
 
 def demonstrate_namespaces():
     print("\n=== Namespace Demonstration ===")
-    print("TODO: Implement namespace demonstration")
+
+    # Create two child objects
+    student1 = ChildClass("Alex", "S101", "Computer Science", ["CMSC 315"])
+    student2 = ChildClass("Jordan", "S102", "Cybersecurity", ["SIFS 201"])
+
+    # Access class variable through class itself and through an object instance
+    print(f"Class variable accessed via Class: {ChildClass.program_type}")
+    print(f"Class variable accessed via Object (student1): {student1.program_type}")
+
+    # Dynamically add an attribute to student1 only
+    student1.honors_status = True
+
+    # Display instance namespaces
+    print("\nStudent 1 Instance Namespace (__dict__):")
+    print(student1.__dict__)
+
+    print("\nStudent 2 Instance Namespace (__dict__):")
+    print(student2.__dict__)
+
+    # Display class namespace keys
+    print("\nChildClass Class Namespace (__dict__ keys):")
+    print([key for key in ChildClass.__dict__.keys() if not key.startswith("__")])
 
 
 # TODO 4:
@@ -73,7 +120,32 @@ def demonstrate_namespaces():
 
 def demonstrate_copying():
     print("\n=== Copy Demonstration ===")
-    print("TODO: Implement shallow copy and deep copy demonstration")
+
+    # Object containing nested mutable list data
+    original_student = ChildClass("Taylor", "S103", "Data Science", ["CMSC 315", ["Module 1", "Module 2"]])
+
+    # Perform shallow copy and deep copy
+    shallow_student = copy(original_student)
+    deep_student = deepcopy(original_student)
+
+    # Modify the original object's nested list at index 1
+    original_student.courses[1].append("Module 3")
+
+    # Output results
+    print(f"Original Object Courses: {original_student.courses}")
+    print(f"Shallow Copy Courses:   {shallow_student.courses}")
+    print(f"Deep Copy Courses:      {deep_student.courses}")
+
+    """
+    EXPLANATION OF DIFFERENCE:
+    - Shallow Copy (copy()): Creates a new outer object, but copies references to any
+      nested mutable objects inside. Therefore, altering the nested inner list
+      modifies both the original object and the shallow copy.
+
+    - Deep Copy (deepcopy()): Recursively creates a completely independent clone of
+      the object and all nested items inside it. Modifying nested data in the original
+      has no impact on the deep copy.
+    """
 
 
 # TODO 5:
@@ -89,9 +161,17 @@ def demonstrate_copying():
 def main():
     print("=== Unit 1 OOP Assignment ===")
 
-    print("\nTODO: Create and test your parent object")
+    print("\n--- Parent Class Object ---")
+    parent_obj = ParentClass("Morgan", "P500")
+    print(parent_obj.get_details())
 
-    print("\nTODO: Create and test your child object")
+    print("\n--- Child Class Object ---")
+    child_obj = ChildClass("Sam", "S200", "Software Engineering", ["CMSC 210", "MATH 140"])
+    child_obj.enroll_course("CMSC 315")
+
+    # Demonstrating inherited/overridden methods and extension method
+    print(child_obj.get_details())
+    print(f"Estimated Weekly Workload: {child_obj.calculate_workload()} hours")
 
     demonstrate_namespaces()
     demonstrate_copying()
