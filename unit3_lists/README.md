@@ -1,30 +1,21 @@
 # Unit 3 Discussion: List Operations
 
 ## Overview
+This project evaluated list operations in Python, specifically testing element insertion, deletion and sequential searching. The program analyzed how array-based list shifting impacts performance across different positions.
 
-This assignment examines insertion, deletion, and searching in Python lists.
+## Implementation Details
 
-## Learning Objectives
+### List Operations
+- Implemented `insert_at()` using Python's built-in `.insert()`, documenting how element shifting creates $O(N)$ time complexity when inserting at the beginning or middle of an array-backed list.
+- Implemented `delete_at()` with explicit boundary validation (`index < 0` or `index >= len(lst)`). Returning `None` and printing an error prevented unexpected `IndexError` exceptions.
+- Implemented `search_value()` using a linear search loop that checks entries sequentially from index 0 through `len(lst) - 1`, returning `-1` when items are not present.
 
-- Insert values into a list
-- Delete values from a list
-- Search for values in a list
-- Analyze list behavior and performance
+### Edge Cases Handled
+- Tested deletion using out-of-bounds indices to confirm clean error logging.
+- Executed deletion attempts on an empty list to verify boundary safety.
+- Searched inside an empty list to ensure linear search returns `-1` without throwing runtime errors.
 
-## Requirements
-
-1. Test insertion at the beginning, middle, and end.
-2. Test deletion at the beginning, middle, and end.
-3. Search for existing and missing values.
-4. Demonstrate edge cases.
-5. Create a real-world scenario.
-
-## Discussion Board Reflection
-
-After completing the programming assignment, add this reflection to your initial discussion post in LEO.
-
-Your reflection should be approximately 150–200 words and address the following questions:
-
-1. What concepts or skills did you learn while completing this assignment?
-2. What challenges did you encounter, and how did you overcome them?
-3. How do list operations impact performance in real-world applications?
+## Execution Instructions
+Run the script directly using Python 3:
+```bash
+python unit3_discussion.py
