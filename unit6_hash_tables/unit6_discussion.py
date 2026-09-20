@@ -31,9 +31,23 @@ def main():
     #    behaves like a hash table.
     # 4. Display the contents of the dictionary.
 
-
     print("\n=== INSERT OPERATIONS ===")
-    print("TODO: Create a dictionary and add multiple key-value pairs.")
+
+    # Python dictionaries act as hash tables under the hood. When a key is added,
+    # Python hashes the key using a built-in hash function to map it directly
+    # to a specific bucket index, allowing average O(1) time insertion.
+    device_inventory = {}
+
+    # Real-World Scenario: A network device inventory mapping Asset IDs (keys) to Device Names (values)
+    device_inventory[1012] = "Router-Core-01"
+    device_inventory[1048] = "Switch-Floor-02"
+    device_inventory[1075] = "Firewall-Main"
+    device_inventory[1103] = "Server-DB-01"
+    device_inventory[1144] = "AP-Lobby"
+
+    print("Initial Inventory State:")
+    for asset_id, device_name in device_inventory.items():
+        print(f"  Asset ID: {asset_id} -> Device Name: {device_name}")
 
     # ===============================
     # TODO (Student): LOOKUP OPERATIONS
@@ -45,7 +59,17 @@ def main():
     # 3. Add meaningful comments to explain how the lookup works.
 
     print("\n=== LOOKUP OPERATIONS ===")
-    print("TODO: Demonstrate successful key lookups.")
+
+    # Dictionary lookups evaluate the key's hash value directly to locate the item's slot
+    # in constant average time O(1), without scanning through other elements.
+    lookup_id_1 = 1048
+    lookup_id_2 = 1103
+
+    device_1 = device_inventory[lookup_id_1]
+    device_2 = device_inventory[lookup_id_2]
+
+    print(f"Lookup Asset ID {lookup_id_1}: Found -> {device_1}")
+    print(f"Lookup Asset ID {lookup_id_2}: Found -> {device_2}")
 
     # ===============================
     # TODO (Student): UPDATE OPERATIONS
@@ -58,7 +82,14 @@ def main():
     #    a new value.
 
     print("\n=== UPDATE OPERATIONS ===")
-    print("TODO: Demonstrate updating an existing key.")
+
+    update_id = 1144
+    print(f"Before Update (Asset ID {update_id}): {device_inventory[update_id]}")
+
+    # Assigning a new value to an existing key hashes the key to locate the existing memory slot
+    # and overwrites the stored value without creating duplicate keys.
+    device_inventory[update_id] = "AP-Lobby-WiFi6"
+    print(f"After Update  (Asset ID {update_id}): {device_inventory[update_id]}")
 
     # ===============================
     # TODO (Student): DELETE OPERATIONS
@@ -70,7 +101,19 @@ def main():
     # 3. Use comments to explain what happens when a key is removed.
 
     print("\n=== DELETE OPERATIONS ===")
-    print("TODO: Demonstrate deleting a key-value pair.")
+
+    delete_id = 1075
+    print(f"Inventory count before deletion: {len(device_inventory)}")
+    print(f"Deleting Asset ID {delete_id} ({device_inventory[delete_id]})...")
+
+    # Deleting a key-value pair removes the reference at the calculated hash index slot,
+    # freeing up memory space and adjusting dictionary size.
+    del device_inventory[delete_id]
+
+    print(f"Inventory count after deletion: {len(device_inventory)}")
+    print("Current Inventory:")
+    for asset_id, device_name in device_inventory.items():
+        print(f"  Asset ID: {asset_id} -> Device Name: {device_name}")
 
     # ===============================
     # TODO (Student): EDGE CASES
@@ -87,8 +130,24 @@ def main():
     # Explain what happens in each case.
 
     print("\n=== EDGE CASES ===")
-    print("TODO: Demonstrate and explain edge cases.")
 
+    # Edge Case 1: Looking up a missing key safely
+    # Direct access like device_inventory[9999] raises a KeyError. Using .get() allows graceful handling.
+    missing_id = 9999
+    retrieved_device = device_inventory.get(missing_id, "Device Not Found")
+    print(f"Edge Case 1 - Safe lookup for missing Asset ID {missing_id}: {retrieved_device}")
+
+    # Edge Case 2: Deleting a missing key safely
+    # del device_inventory[9999] would crash the application. Using .pop(key, None) deletes safely if present.
+    safe_deleted_value = device_inventory.pop(missing_id, "Asset ID not present - No action taken")
+    print(f"Edge Case 2 - Safe deletion attempt for missing Asset ID {missing_id}: {safe_deleted_value}")
+
+    # Edge Case 3: Updating or inserting on a missing key
+    # Assigning to a missing key does not fail; Python automatically hashes the new key and inserts it.
+    new_asset_id = 1200
+    print(f"Edge Case 3 - Setting value for new key {new_asset_id}...")
+    device_inventory[new_asset_id] = "Switch-Core-Backup"
+    print(f"Updated Inventory State (Asset ID {new_asset_id} added): {device_inventory[new_asset_id]}")
 
 
 if __name__ == "__main__":
