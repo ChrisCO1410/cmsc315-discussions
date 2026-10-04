@@ -2,32 +2,28 @@
 
 ## Overview
 
-This assignment explores graph traversal using Breadth-First Search (BFS).
+This assignment explored graph traversal using Breadth-First Search (BFS) in Python, demonstrating how adjacency lists represent relationships and how queue-based mechanisms ensure level-by-level exploration.
 
-## Learning Objectives
+## Implementation Details
 
-- Represent graphs using adjacency lists
-- Implement BFS
-- Use queues in graph traversal
-- Analyze graph traversal behavior
+- **Graph Representation**: Constructed an adjacency list using a Python dictionary mapping vertex strings to lists of adjacent neighbors.
+- **BFS Logic**: Utilized `collections.deque` as a First-In-First-Out (FIFO) queue alongside a set to keep track of visited nodes.
+- **Modifications**: Added dynamic node/edge insertion (`User_G`) and tested the altered traversal pipeline.
+- **Edge Cases Tested**:
+    - Starting traversal from different starting points (`User_F`).
+    - Gracefully handling non-existent start nodes without `KeyError` exceptions.
+    - Traversing disconnected graphs with unreachable isolated components.
 
-## Requirements
-
-1. Create a graph.
-2. Perform BFS traversal.
-3. Add nodes or edges.
-4. Demonstrate edge cases.
-5. Analyze BFS behavior.
-6. Create a real-world graph example.
-
+---
 
 ## Discussion Board Reflection
 
-After completing the programming assignment, add this reflection to your initial discussion post in LEO.
+### 1. Concepts and Skills Learned
+I deepened my understanding of graph data structures represented via adjacency lists in Python. Implementing Breadth-First Search (BFS) reinforced how FIFO (First-In-First-Out) queue operations enforce a strict level-by-level traversal order. Additionally, I learned how tracking visited vertices prevents infinite cycles and how edge cases (such as disconnected components and non-existent vertices) must be gracefully managed.
 
-Your reflection should be approximately 150–200 words and address the following questions:
+### 2. Challenges Encountered and Solutions
+A primary challenge was ensuring that vertices were marked as visited as soon as they were enqueued—rather than when they were dequeued. Marking vertices during enqueueing prevented duplicate additions to the queue when multiple nodes shared common neighbors. I resolved this by reviewing queue mechanics and stepping through the execution trace manually.
 
-1. What concepts or skills did you learn while completing this assignment?
-2. What challenges did you encounter, and how did you overcome them?
-3. Compare BFS and DFS conceptually and describe real-world applications and use cases.
-
+### 3. BFS vs. DFS Comparison & Real-World Use Cases
+- **BFS (Breadth-First Search)** explores graphs horizontally level by level using a queue. It is guaranteed to find the shortest path in unweighted graphs. Real-world applications include GPS navigation systems finding minimum-hop routes, peer-to-peer network broadcasting, and social media recommendation algorithms finding direct connections.
+- **DFS (Depth-First Search)** explores graphs vertically, diving down a single branch before backtracking using a stack or recursion. It uses less memory for wide graphs and excels in topological sorting, solving mazes, cycle detection, and finding strongly connected components.
